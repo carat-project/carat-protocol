@@ -30,21 +30,6 @@ struct ProcessInfo {
 	7: optional i32 versionCode; // Version of app, android version code.
 	8: optional list<string> appSignatures; // Signatures of the app from PackageInfo.signatures
 	9: optional string installationPkg; // Package that installed this one, e.g. com.android.vending, com.google.play, or com.amazon.venezia.
-	10: optional list<PackageProcess> processes;
-}
-
-struct PackageProcess {
-	1: optional string processName; // Note: services are marked with @service
-	2: optional i32 processCount; // Sometimes there are multiple processes running from the same package
-	3: optional i32 uId; // UID that owns the service
-	4: optional bool sleeping; // True if the service is not running but scheduled to do so
-	5: optional bool foreground; // True if service has requested to run in a foreground process
-	6: optional double foregroundTime; // Time activity has spent on foreground
-	7: optional double launchCount; // Time activity has been launched
-	8: optional i32 importance; // Running activity importance
-	9: optional i32 crashCount; // Number of times the service has crashed
-	10: optional double lastStartSinceBoot; // Time since boot (elapsed) the service was last started  
-	11: optional double lastStartTimestamp; // Timestamp of the last start
 }
 
 //
@@ -194,7 +179,6 @@ struct Sample {
 	25: optional Settings settings;
 	26: optional StorageDetails storageDetails;
 	27: optional string countryCode; // Two-letter country code from network or SIM
-	28: optional bool usageStatsEnabled; // True if user has enabled usage stats access
 }
 
 //
