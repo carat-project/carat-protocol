@@ -14,7 +14,7 @@ struct Registration {
 	3: optional string platformId;		// Platform ID, eg. iPhone3,1 or Galaxy Nexus
 	4: optional string systemVersion;	// iOS version, eg. 3.1.3 or 4.0.2
 	5: optional string systemDistribution; // CyanogenMod, MIUI, etc.
-	6: optional string kernelVersion; // 2.6.32-cyanogenmod-... etc.
+	6: optional string kernelVersion; 	// 2.6.32-cyanogenmod-... etc.
 }
 
 //
@@ -110,10 +110,9 @@ struct CpuStatus {
     1: optional double cpuUsage; // cpu usage fraction (0-1)
 	2: optional double uptime; // uptime in seconds
 	3: optional double sleeptime; // experimental sleep time
-    // These may change
-//	3: optional double cpuTime; // CPU usage in seconds since reboot
-//	4: optional double idleTime; // idle time in seconds since reboot
-
+	4: optional list<i64> currentFrequencies;
+	5: optional list<i64> minFrequencies;
+	6: optional list<i64> maxFrequencies;
 }
 
 //
@@ -144,6 +143,7 @@ struct Settings {
 	1: optional bool bluetoothEnabled;
 	2: optional bool locationEnabled;
 	3: optional bool powersaverEnabled;
+	4: optional bool rotationEnabled;
 }
 
 //
@@ -164,7 +164,7 @@ struct StorageDetails {
 // Sample
 //
 struct Sample {
-	1: required string uuId;		// The ID for this device.
+	1: required string uuId;			// The ID for this device.
 	2: optional double timestamp;		// Timestamp for this sample.
 	3: optional ProcessInfoList piList;	// List of processes running.
 	4: optional string batteryState;	// State of the battery. ie. charging, discharging, etc.
@@ -172,29 +172,30 @@ struct Sample {
 	6: optional i32 memoryWired;		// Total wired memory.
 	7: optional i32 memoryActive;		// Total active memory.
 	8: optional i32 memoryInactive;		// Total inactive memory.
-	9: optional i32 memoryFree;		// Total free memory.
+	9: optional i32 memoryFree;			// Total free memory.
 	10: optional i32 memoryUser;		// Total user memory.
 	11: optional string triggeredBy;	// Trigger reason.
 	12: optional string networkStatus;	// Reachability status.
-	13: optional double distanceTraveled;	// If locationchange triggers, then this will have a value.
-	// Android-only: brightness
-	14: optional i32 screenBrightness;	// Brightness value, 0-255
-	// Android-only: network status
-	15: optional NetworkDetails networkDetails; // Network status struct, with info on the active network, mobile,  and wifi
-	16: optional BatteryDetails batteryDetails; // Battery status struct, with battery health, charger, voltage, temperature, etc.
-	17: optional CpuStatus cpuStatus; // CPU information, such as cpu usage percentage.
-	//Android only: enabled location providers (such as GPS)
-	18: optional list<string> locationProviders;	// Enabled location providers
-	19: optional CallInfo callInfo; // call ratios and information.
-	20: optional i32 screenOn; // Android Only: Screen on == 1, off == 0
-	21: optional string timeZone; // Device timezone abbreviation
-	22: optional i32 unknownSources; // Android Only: Unknown source app installation on == 1, off == 0
-	23: optional i32 developerMode; // Android Only: Developer mode on == 1, off == 0
-	24: optional list<Feature> extra; // Extra features for extensibility.
-	25: optional Settings settings;
-	26: optional StorageDetails storageDetails;
-	27: optional string countryCode; // Two-letter country code from network or SIM
-	28: optional bool usageStatsEnabled; // True if user has enabled usage stats access
+	13: optional double distanceTraveled;	// Distance traveled between samples
+	14: optional i32 screenBrightness;		// Screen brightness value, 0-255
+	15: optional NetworkDetails networkDetails; 	// Network information, see struct NetworkDetails
+	16: optional BatteryDetails batteryDetails; 	// Battery information, see struct BatteryDetails
+	17: optional CpuStatus cpuStatus; 				// CPU information, such as cpu usage percentage.
+	18: optional list<string> locationProviders;	// Android only: Enabled location providers
+	19: optional CallInfo callInfo; 	// Not used: call ratios and information.
+	20: optional i32 screenOn; 			// Android Only: Screen on == 1, off == 0
+	21: optional string timeZone; 		// Android Only: Device timezone abbreviation
+	22: optional i32 unknownSources; 	// Android Only: Unknown source app installation on == 1, off == 0
+	23: optional i32 developerMode; 	// Android Only: Developer mode on == 1, off == 0
+	24: optional list<Feature> extra; 	// Extra features for extensibility.
+	25: optional Settings settings;		// System settings, see struct Settings
+	26: optional StorageDetails storageDetails;	// System storage, see struct StorageDetails
+	27: optional string countryCode; 		// Two-letter country code from network or SIM
+	28: optional bool usageStatsEnabled; 	// Android only: True if user has enabled usage stats access
+	29: optional bool lightIdleEnabled; 	// Android only: True if light doze is enabled 
+	30: optional bool deepIdleEnabled; 		// Android only: True if deep doze is enabled
+	31: optional list<i64> thermalZones; 	// Android only: Thermal zones temperatures listed in SysFs
+	32: optional list<string> thermalZoneNames; // Android only: Names for thermal zone sensors 
 }
 
 //
@@ -205,10 +206,8 @@ struct DetailScreenReport {
 	2: optional list<double> xVals;
 	3: optional list<double> yVals;
 	4: optional double expectedValue;
-	// 95% confidence error value
-	5: optional double error;
-	6: optional double errorWithout;
-	// Number of samples used for expectedValue and error
+	5: optional double error; 			// 95% confidence error value
+	6: optional double errorWithout; 	// Number of samples used for expectedValue and error
 	7: optional double samples;
 	8: optional double samplesWithout;
 }
@@ -234,7 +233,7 @@ struct Reports {
 // Struct with info on hog or bug with percentages
 //
 struct HogsBugs {
-	1: optional string appName;		// Application name.
+	1: optional string appName;			// Application name.
 	2: optional double wDistance;		// Wasserstein distance.
 	3: optional list<double> xVals;		// This is the x-axis values for PDF in the detailed view for this app.
 	4: optional list<double> yVals;		// This is the y-axis values for PDF in the detailed view for this app.
@@ -244,12 +243,10 @@ struct HogsBugs {
 	8: optional double expectedValueWithout;
 	9: optional double error;
 	10: optional double errorWithout;
-	// Number of samples used for expectedValue and error
-	11: optional double samples;
+	11: optional double samples;		// Number of samples used for expectedValue and error
     12: optional double samplesWithout;
-	// Android-only
-	13: optional string appLabel; // Human-readable application label on Android
-	14: optional string appPriority; // Priority of app. See ProcessList
+	13: optional string appLabel; 		// Android only: Human-readable application label
+	14: optional string appPriority; 	// Priority of app. See ProcessList
 }
 
 typedef list<HogsBugs> HogsBugsList
@@ -258,7 +255,7 @@ typedef list<HogsBugs> HogsBugsList
 // Hog report
 //
 struct HogBugReport {
-	1: required string uuId;		// ID for the device for which this report is intended.
+	1: required string uuId;			// ID for the device for which this report is intended.
 	2: optional HogsBugsList hbList;	// List of hogs or bugs.
 }
 
@@ -292,7 +289,6 @@ struct Questionnaire {
 	// Display a custom CTA message in actions
 	10: optional string actionTitle;
 	11: optional string actionText;
-
 
 	12: required list<QuestionnaireItem> items;
 }
