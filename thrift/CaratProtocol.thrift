@@ -31,6 +31,7 @@ struct ProcessInfo {
 	8: optional list<string> appSignatures; // Signatures of the app from PackageInfo.signatures
 	9: optional string installationPkg; // Package that installed this one, e.g. com.android.vending, com.google.play, or com.amazon.venezia.
 	10: optional list<PackageProcess> processes;
+	11: optional bool ignoringBatteryOptimizations;
 }
 
 struct PackageProcess {
