@@ -42,7 +42,7 @@ publishing {
      mavenJava(MavenPublication) {
        groupId 'fi.helsinki.cs.nodes.carat'
        artifactId 'carat-protocol'
-       version '1.9'
+       version '1.9.0'
 
        from components.java
      }
