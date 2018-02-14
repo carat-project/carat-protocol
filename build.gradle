@@ -29,7 +29,7 @@ repositories {
     jcenter()
 }
 
-version = '1.9.0'
+version = '1.9.1'
 
 jar {
    manifest {
@@ -41,8 +41,8 @@ publishing {
   publications {
      mavenJava(MavenPublication) {
        groupId 'fi.helsinki.cs.nodes.carat'
-       artifactId 'carat-protocol'
-       version '1.9.0'
+       artifactId rootProject.name
+       version project.version
 
        from components.java
      }
