@@ -10,6 +10,7 @@ plugins {
     // Apply the java-library plugin to add support for Java Library
     id 'java-library'
     id 'eclipse'
+    id 'maven-publish'
 }
 
 dependencies {
@@ -35,3 +36,17 @@ jar {
       attributes('Implementation-Title': project.name, 'Implementation-Version':project.version)
    }
 }
+
+publishing {
+  publications {
+     mavenJava(MavenPublication) {
+       groupId 'fi.helsinki.cs.nodes.carat'
+       artifactId 'carat-protocol'
+       version '1.9'
+
+       from components.java
+     }
+  }
+}
+
+
