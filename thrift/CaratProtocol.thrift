@@ -320,7 +320,6 @@ struct Answers {
 service CaratService {
 	oneway void registerMe(1:Registration registration);
 	bool uploadSample(1:Sample sample);
-	i64 uploadSamples(1: list<Sample> samples, 2: string uuId);
 	Reports getReports(1: string uuId, 2: FeatureList features);
 	HogBugReport getHogOrBugReport(1: string uuId, 2: FeatureList features)
 	HogBugReport getQuickHogsAndMaybeRegister(1:Registration registration, 2:list<string> processList)
