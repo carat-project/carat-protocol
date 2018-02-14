@@ -1,10 +1,10 @@
 ### Carat protocol
 
-Uses Thrift 0.11.0. See [Apache Thrift](https://thrift.apache.org/) homepage for more information.
+Uses Thrift 0.9.2. See [Apache Thrift](https://thrift.apache.org/) homepage for more information.
 
 ## Compile instructions
 
-* Install Thrift 0.11.0.
+* Install Thrift 0.9.2.
 * `./gen-java.sh`
 * ./gradlew build
 
