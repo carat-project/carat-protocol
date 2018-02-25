@@ -88,6 +88,7 @@ struct NetworkDetails {
 	12: optional string simOperator; 	 // service provider, bound to sim
 	13: optional string mcc; 			 // numeric country code
 	14: optional string mnc;			 // numeric network code
+	15: optional i32 mobileSignalStrength;
 }
 
 //
