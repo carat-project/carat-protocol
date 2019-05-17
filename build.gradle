@@ -17,6 +17,7 @@ dependencies {
     // This dependency is exported to consumers, that is to say found on their compile classpath.
     // Thrift 0.11.0
     api 'org.apache.thrift:libthrift:0.11.0'
+    implementation 'javax.annotation:jsr250-api:1.0'
 
     // Use JUnit test framework
     testImplementation 'junit:junit:4.12'
@@ -30,6 +31,11 @@ repositories {
 }
 
 version = '1.9.3'
+
+compileJava {
+    sourceCompatibility = 1.8
+    targetCompatibility = 1.8
+}
 
 jar {
    manifest {
